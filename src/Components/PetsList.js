@@ -1,9 +1,18 @@
+import { useState } from "react";
 import pets from "../petsData";
 import PetItem from "./PetItem";
 
-function PetsList() {
-  const petList = pets.map((pet) => <PetItem pet={pet} key={pet.id} />);
+const PetsList = () => {
+  const [qury, setQury] = useState("");
 
+  const petList = pets
+    .filter((pet) => pet.name.includes(qury))
+    .map((pet) => <PetItem pet={pet} key={pet.id} />);
+
+  const search = (e) => {
+    setQury(e.target.value);
+  };
+  console.log(qury);
   return (
     <section id="doctors" className="doctor-section pt-140">
       <div className="container">
@@ -20,6 +29,7 @@ function PetsList() {
                   placeholder="Search"
                   aria-label="Search"
                   aria-describedby="search-addon"
+                  onChange={search}
                 />
               </div>
               <br />
@@ -40,6 +50,6 @@ function PetsList() {
       </div>
     </section>
   );
-}
+};
 
 export default PetsList;
